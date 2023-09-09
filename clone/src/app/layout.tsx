@@ -1,5 +1,3 @@
-'use client'
-
 import { Nunito } from "next/font/google"
 import Navbar from "./components/navbar/Navbar"
 import ClientOnly from "./components/ClientOnly"
@@ -12,22 +10,24 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import LoginModal from "./components/modals/LoginModal"
+import getCurrentUser from "./actions/getCurrentUser"
 
-const inter = Inter({ subsets: ['latin'] })
+
 const font = Nunito({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Clone',
+  title: 'KampusView',
   description: 'Clone for Krumble platform',
 }
 
 
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const currentUser = await getCurrentUser();
   return (
     <html lang="en">
       <body className={font.className}>
@@ -35,7 +35,7 @@ export default function RootLayout({
           <ToasterProvider />
           <RegisterModal />
           <LoginModal />
-          <Navbar />
+          <Navbar currentUser={currentUser}/>
         </ClientOnly>
           {children}
       </body>

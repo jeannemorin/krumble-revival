@@ -9,7 +9,6 @@ import {
   useForm
 } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
-import { AiFillGithub } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 
 import useRegisterModal from "@/app/hooks/useRegisterModal";
@@ -100,7 +99,7 @@ const LoginModal = () => {
             outline 
             label="Se connecter avec Google"
             icon={FcGoogle}
-            onClick={() => {}} //signIn('google')} 
+            onClick={() => signIn('google')} 
           />
           <div 
             className="
@@ -112,7 +111,7 @@ const LoginModal = () => {
           >
             <p>Pas encore de compte?
               <span 
-                //onClick={onToggle} 
+                onClick={onToggle} 
                 className="
                   text-neutral-800
                   cursor-pointer 
