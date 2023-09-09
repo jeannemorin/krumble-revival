@@ -7,11 +7,13 @@ import MenuItem from "./MenuItems";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useState, useCallback } from "react";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
+import useLoginModal from "@/app/hooks/useLoginModal";
 
 
 const UserMenu = () => {
 
     const registerModal = useRegisterModal();
+    const loginModal = useLoginModal()
     const [isOpen, setIsOpen] = useState(false);
     const toggleOpen = useCallback(() => {
         setIsOpen((value) => !value);
@@ -76,7 +78,7 @@ const UserMenu = () => {
                         <>
                             <MenuItem 
                             label="Login" 
-                            onClick={() => {}}//router.push('/trips')}
+                            onClick={() => loginModal.onOpen()}
                             />
                             <MenuItem 
                             label="Sign up" 

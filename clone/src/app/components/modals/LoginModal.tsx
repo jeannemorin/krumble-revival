@@ -1,82 +1,81 @@
 'use client';
 
-import axios from "axios";
-import { signIn } from "next-auth/react";
-import { FcGoogle } from "react-icons/fc";
 import { useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
+import { signIn } from 'next-auth/react';
 import { 
   FieldValues, 
-  SubmitHandler,
+  SubmitHandler, 
   useForm
 } from "react-hook-form";
+import { FcGoogle } from "react-icons/fc";
+import { AiFillGithub } from "react-icons/ai";
+import { useRouter } from "next/navigation";
 
-import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
+import useLoginModal from "@/app/hooks/useLoginModal";
 
 import Modal from "./Modal";
 import Input from "../inputs/Input";
 import Heading from "../Heading";
 import Button from "../Button";
 
-const RegisterModal= () => {
+const LoginModal = () => {
+    const router = useRouter();
     const registerModal = useRegisterModal();
     const loginModal = useLoginModal();
     const [isLoading, setIsLoading] = useState(false);
 
     const { 
-      register, 
-      handleSubmit,
-      formState: {
-        errors,
-      },
-    } = useForm<FieldValues>({
-      defaultValues: {
-        name: '',
-        email: '',
-        password: ''
-      },
-    });
+        register, 
+        handleSubmit,
+        formState: {
+          errors,
+        },
+      } = useForm<FieldValues>({
+        defaultValues: {
+          email: '',
+          password: ''
+        },
+      });
 
-    const onSubmit: SubmitHandler<FieldValues> = (data) => {
-      setIsLoading(true);
+      const onSubmit: SubmitHandler<FieldValues> = 
+        (data) => {
+          setIsLoading(true);
 
-      axios.post('/api/register', data)
-      .then(() => {
-        toast.success('Registered!');
-        registerModal.onClose();
-        loginModal.onOpen();
-      })
-      .catch((error) => {
-        toast.error(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      })
-    }
+          signIn('credentials', { 
+            ...data, 
+            redirect: false,
+        })
+        .then((callback) => {
+          setIsLoading(false);
 
-    const onToggle = useCallback(() => {
-      registerModal.onClose();
-      loginModal.onOpen();
-    }, [registerModal, loginModal])
+          if (callback?.ok) {
+            toast.success('Logged in');
+            router.refresh();
+            loginModal.onClose();
+          }
+          
+          if (callback?.error) {
+            toast.error(callback.error);
+          }
+        });
+      }
+
+  const onToggle = useCallback(() => {
+    loginModal.onClose();
+    registerModal.onOpen();
+  }, [loginModal, registerModal])
 
       const bodyContent = (
         <div className="flex flex-col gap-4">
           <Heading
             title="Bienvenue sur KampusView"
-            subtitle="Créer un compte"
+            subtitle="Se connecter à son compte"
           />
           <Input
             id="email"
             label="Email"
-            disabled={isLoading}
-            register={register}
-            errors={errors}
-            required
-          />
-          <Input
-            id="name"
-            label="Nom"
             disabled={isLoading}
             register={register}
             errors={errors}
@@ -99,9 +98,9 @@ const RegisterModal= () => {
           <hr />
           <Button 
             outline 
-            label="S'inscrire avec Google"
+            label="Se connecter avec Google"
             icon={FcGoogle}
-            onClick={() => signIn('google')} 
+            onClick={() => {}} //signIn('google')} 
           />
           <div 
             className="
@@ -111,15 +110,16 @@ const RegisterModal= () => {
               font-light
             "
           >
-            <p>Déjà un compte?
+            <p>Pas encore de compte?
               <span 
-                onClick={onToggle} 
+                //onClick={onToggle} 
                 className="
                   text-neutral-800
                   cursor-pointer 
                   hover:underline
                 "
-                > Se connecter</span>
+                // eslint-disable-next-line react/no-unescaped-entities
+                > S'inscrire</span>
             </p>
           </div>
         </div>
@@ -128,10 +128,10 @@ const RegisterModal= () => {
     return (
         <Modal
           disabled={isLoading}
-          isOpen={registerModal.isOpen}
-          title="S'inscrire"
+          isOpen={loginModal.isOpen}
+          title="Se connecter"
           actionLabel="Continuer"
-          onClose={registerModal.onClose}
+          onClose={loginModal.onClose}
           onSubmit={handleSubmit(onSubmit)}
           body={bodyContent}
           footer={footerContent}
@@ -139,4 +139,4 @@ const RegisterModal= () => {
       );
 }
 
-export default RegisterModal;
+export default LoginModal;

@@ -3,6 +3,6 @@ import styles from './page.module.css'
 
 export default function Home() {
   return (
-    <div className='text-rose-500'>Hello Clone</div>
+    <div className='text-blue-500'>Hello Clone</div>
   )
 }
