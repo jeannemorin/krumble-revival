@@ -6,10 +6,12 @@ import MenuItem from "./MenuItems";
 
 import { AiOutlineMenu } from "react-icons/ai";
 import { useState, useCallback } from "react";
+import useRegisterModal from "@/app/hooks/useRegisterModal";
 
 
 const UserMenu = () => {
 
+    const registerModal = useRegisterModal();
     const [isOpen, setIsOpen] = useState(false);
     const toggleOpen = useCallback(() => {
         setIsOpen((value) => !value);
@@ -78,7 +80,7 @@ const UserMenu = () => {
                             />
                             <MenuItem 
                             label="Sign up" 
-                            onClick={() => {}}// router.push('/favorites')}
+                            onClick={() => registerModal.onOpen()}
                             />
                         </>
                     </div>
