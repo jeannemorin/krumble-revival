@@ -64,7 +64,7 @@ interface CategoryBoxProps {
         `}
       >
         <Icon size={24} />
-        <div className="font-medium text-sm">
+        <div className="font-medium text-sm text-center leading-1">
           {label}
         </div>
       </div>
