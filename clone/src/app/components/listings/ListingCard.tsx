@@ -37,7 +37,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   currentUser,
 }) => {
   const router = useRouter();
-  const hasFavorited = true;
+  const hasFavorited = false;
 
   //const { getByValue } = useCountries();
 
@@ -121,20 +121,18 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
           </div>
         </div>
-        <div className="font-semibold text-lg">
-          {data.title}
-        </div>
-        <div className="font-light text-neutral-500">
-          Ecole, Ville
-        </div>
-        <div className="flex flex-row items-center gap-1">
-          <div className="font-semibold">
-            $ 500
+          <div className="font-semibold text-lg">
+            {data.title}
           </div>
-          {!reservation && (
-            <div className="font-light">night</div>
-          )}
-        </div>
+          <div className="font-light text-neutral-500 leading-3">
+            {data.school}, {data.campusLocation}
+          </div>
+          
+          <div className="font-light text-[14px] leading-4">
+             {data.subtitle}
+          </div>
+
+        
         {onAction && actionLabel && (
           <Button
             disabled={disabled}

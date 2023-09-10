@@ -16,13 +16,14 @@ export async function POST(
   const { 
     title,
     description,
+    subtitle,
     imageSrc,
     category,
-    roomCount,
-    bathroomCount,
-    guestCount,
-    location,
-    price,
+    school,
+    campusLocation,
+    emailContact,
+    phoneContact,
+    partnershipDescription
    } = body;
 
   Object.keys(body).forEach((value: any) => {
@@ -35,13 +36,14 @@ export async function POST(
     data: {
       title,
       description,
+      subtitle,
       imageSrc,
       category,
-      roomCount,
-      bathroomCount,
-      guestCount,
-      locationValue: "HR",
-      price: parseInt(price, 10),
+      school,
+      campusLocation,
+      emailContact,
+      phoneContact,
+      partnershipDescription,
       userId: currentUser.id
     }
   });

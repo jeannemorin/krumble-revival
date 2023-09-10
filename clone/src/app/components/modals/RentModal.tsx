@@ -14,23 +14,20 @@ import { useMemo, useState } from "react";
 import useRentModal from '@/app/hooks/useRentModal';
 
 import Modal from "./Modal";
-//import Counter from "../inputs/Counter";
-//import CountrySelect from "../inputs/CountrySelect";
 import { categories } from '../navbar/Categories';
-//import ImageUpload from '../inputs/ImageUpload';
 import Input from '../inputs/Input';
 import Heading from '../Heading';
 import CategoryInput from '../inputs/CategoryInput';
-import Counter from '../inputs/Counter';
 import ImageUpload from '../inputs/ImageUpload';
+import BigInput from '../inputs/BigInput';
 
 enum STEPS {
   CATEGORY = 0,
   LOCATION = 1,
-  INFO = 2,
+  DESCRIPTION = 2,
   IMAGES = 3,
-  DESCRIPTION = 4,
-  PRICE = 5,
+  INFO = 4,
+  CONTACT = 5,
 }
 
 const RentModal = () => {
@@ -52,26 +49,24 @@ const RentModal = () => {
       } = useForm<FieldValues>({
         defaultValues: {
           category: '',
-          location: 'Croatia',
-          guestCount: 1,
-          roomCount: 1,
-          bathroomCount: 1,
           imageSrc: '',
-          price: 1,
           title: '',
           description: '',
+          subtitle: '',
+          school: '',
+          campusLocation: '',
+          emailContact: '',
+          phoneContact: '',
+          partnershipDescription: ''
         }
       });
 
     const category = watch('category');
-    const guestCount = watch('guestCount');
-    const roomCount = watch('roomCount');
-    const bathroomCount = watch('bathroomCount');
     const imageSrc = watch('imageSrc');
 
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
-        if (step !== STEPS.PRICE) {
+        if (step !== STEPS.CONTACT) {
           return onNext();
         }
         
@@ -116,7 +111,7 @@ const RentModal = () => {
 
     //ACTION WRITTEN ON RIGHT BUTTON
     const actionLabel = useMemo(() => {
-        if (step === STEPS.PRICE) {
+        if (step === STEPS.CONTACT) {
           return 'Create'
         }
     
@@ -132,7 +127,7 @@ const RentModal = () => {
         return 'Back'
     }, [step]);
 
-    
+    //STEP 0 CHOOSE A CATEGORY
     let bodyContent = (
         <div className="flex flex-col gap-8">
           <Heading
@@ -164,7 +159,7 @@ const RentModal = () => {
         </div>
       )
     
-      //STEP 2
+      //STEP 1 : LOCATION OF YOUR CAMPUS
       if (step === STEPS.LOCATION) {
         bodyContent = (
           <div className="flex flex-col gap-8">
@@ -173,49 +168,75 @@ const RentModal = () => {
                 subtitle="Aide nous à te trouver!"
             />
 
+            <Input
+              id="school"
+              label="Ton école"
+              disabled={isLoading}
+              register={register}
+              errors={errors}
+              required
+            />
+            <hr />
+            <Input
+              id="campusLocation"
+              label="Ville"
+              disabled={isLoading}
+              register={register}
+              errors={errors}
+              required
+            />
           
           </div>
         );
       }
       
-      //STEP 3
-      if (step === STEPS.INFO) {
+      //STEP 2 : DESCRIPTION OF THE STUDENT CLUB
+      if (step === STEPS.DESCRIPTION) {
         bodyContent = (
           <div className="flex flex-col gap-8">
             <Heading
-              title="Share some basics about your place"
-              subtitle="What amenitis do you have?"
+              title="Dis-nous en un peu plus sur l'asso"
+              subtitle="Ravis de faire ta connaissance"
             />
-            <Counter 
-              onChange={(value) => setCustomValue('guestCount', value)}
-              value={guestCount}
-              title="Guests" 
-              subtitle="How many guests do you allow?"
+            <Input
+              id="title"
+              label="Nom de l'asso"
+              disabled={isLoading}
+              register={register}
+              errors={errors}
+              required
+            />
+            <Input
+              id="subtitle"
+              label="En quelques mots..."
+              disabled={isLoading}
+              register={register}
+              errors={errors}
+              required
             />
             <hr />
-            <Counter 
-              onChange={(value) => setCustomValue('roomCount', value)}
-              value={roomCount}
-              title="Rooms" 
-              subtitle="How many rooms do you have?"
-            />
-            <hr />
-            <Counter 
-              onChange={(value) => setCustomValue('bathroomCount', value)}
-              value={bathroomCount}
-              title="Bathrooms" 
-              subtitle="How many bathrooms do you have?"
+            <BigInput
+              id="description"
+              label="Description de l'asso"
+              disabled={isLoading}
+              register={register}
+              errors={errors}
+              required
+              rows={10}
+              maxLength={400}
             />
           </div>
         )
       }
 
+      
+      //STEP 3 : CHOOSE A PROFIL PIC
       if (step === STEPS.IMAGES) {
         bodyContent = (
           <div className="flex flex-col gap-8">
             <Heading
-              title="Ajoute une photo de couverture pour ton asso"
-              subtitle="Montre aux entreprises qui vous êtes!"
+              title="Ajoute une photo de profil pour ton asso"
+              subtitle=""
             />
             <ImageUpload
               onChange={(value) => setCustomValue('imageSrc', value)}
@@ -225,16 +246,40 @@ const RentModal = () => {
         )
       }
 
-      if (step === STEPS.DESCRIPTION) {
+
+      //STEP 4 : PARTNERSHIP INFO
+      if (step === STEPS.INFO) {
         bodyContent = (
           <div className="flex flex-col gap-8">
             <Heading
-              title="How would you describe your place?"
-              subtitle="Short and sweet works best!"
+              title="Quel partenariat tu recherches ?"
+              subtitle="Pourquoi doit-on vous aider ?"
+            />
+            <BigInput
+              id="partnershipDescription"
+              label="Dis-nous tout..."
+              disabled={isLoading}
+              register={register}
+              errors={errors}
+              required
+              rows={10}
+              maxLength={600}
+            />
+          </div>
+        )
+      }
+      
+      //STEP 5 : CONTACT
+      if (step === STEPS.CONTACT) {
+        bodyContent = (
+          <div className="flex flex-col gap-8">
+            <Heading
+              title="Maintenant, le contact de l'association"
+              subtitle="Comment on peut vous contacter ?"
             />
             <Input
-              id="title"
-              label="Title"
+              id="emailContact"
+              label="Email"
               disabled={isLoading}
               register={register}
               errors={errors}
@@ -242,33 +287,11 @@ const RentModal = () => {
             />
             <hr />
             <Input
-              id="description"
-              label="Description"
+              id="phoneContact"
+              label="Téléphone"
               disabled={isLoading}
               register={register}
               errors={errors}
-              required
-            />
-          </div>
-        )
-      }
-    
-      if (step === STEPS.PRICE) {
-        bodyContent = (
-          <div className="flex flex-col gap-8">
-            <Heading
-              title="Now, set your price"
-              subtitle="How much do you charge per night?"
-            />
-            <Input
-              id="price"
-              label="Price"
-              formatPrice 
-              type="number" 
-              disabled={isLoading}
-              register={register}
-              errors={errors}
-              required
             />
           </div>
         )
