@@ -16,6 +16,7 @@ import {
 import Button from "../Button";
 import ClientOnly from "../ClientOnly";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import HeartButton from "../HeartButton";
 
 interface ListingCardProps {
   data: SafeListing;
@@ -106,18 +107,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
             right-3
           ">
             
-            <AiOutlineHeart 
-                size={28}
-                className="
-                    fill-white
-                    absolute
-                    -top-[2px]
-                    -right-[2px]"/>
-
-            <AiFillHeart 
-                size={24} 
-                className={
-                    hasFavorited ? 'fill-rose-500' : 'fill-neutral-500/70'}/>
+            <HeartButton 
+              listingId={data.id}
+              currentUser={currentUser}/>
 
           </div>
         </div>
