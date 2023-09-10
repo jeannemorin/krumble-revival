@@ -20,6 +20,7 @@ import Modal from "./Modal";
 import Input from "../inputs/Input";
 import Heading from "../Heading";
 import Button from "../Button";
+import SelectOption from "../inputs/SelectOption";
 
 const RegisterModal= () => {
     const registerModal = useRegisterModal();
@@ -37,7 +38,7 @@ const RegisterModal= () => {
         name: '',
         email: '',
         password: '',
-        assoUser: false
+        type: ''
       },
     });
 
@@ -96,19 +97,15 @@ const RegisterModal= () => {
             required
           />
 
-          <div className="flex flex-row gap-4">
-            <Button  
-              outline
-              label="Je suis une association"
-              icon={IoSchoolOutline}
-              onClick={() => {}} 
-            />
-            <Button  
-              label="Je suis une entreprise"
-              icon={BiBriefcaseAlt2}
-              onClick={() => {}}
-            />
-          </div>
+          <SelectOption 
+            id="type"
+            label="Vous êtes une"
+            disabled={isLoading}
+            register={register}
+            errors={errors}
+            required
+            options={["Entreprise","Association"]}
+          />
         </div>
       )
     

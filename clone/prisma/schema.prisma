@@ -17,7 +17,7 @@ model User {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   favoriteIds     String[] @db.ObjectId
-  assoUser        Boolean @default(false)
+  type            String
 
   accounts Account[]
   listings Listing[]
