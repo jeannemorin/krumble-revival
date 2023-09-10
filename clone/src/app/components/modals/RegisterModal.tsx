@@ -3,6 +3,8 @@
 import axios from "axios";
 import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
+import { BiBriefcaseAlt2 } from "react-icons/bi"
+import { IoSchoolOutline } from 'react-icons/io5'
 import { useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
 import { 
@@ -34,12 +36,14 @@ const RegisterModal= () => {
       defaultValues: {
         name: '',
         email: '',
-        password: ''
+        password: '',
+        assoUser: false
       },
     });
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
       setIsLoading(true);
+      console.log(data)
 
       axios.post('/api/register', data)
       .then(() => {
@@ -91,6 +95,20 @@ const RegisterModal= () => {
             errors={errors}
             required
           />
+
+          <div className="flex flex-row gap-4">
+            <Button  
+              outline
+              label="Je suis une association"
+              icon={IoSchoolOutline}
+              onClick={() => {}} 
+            />
+            <Button  
+              label="Je suis une entreprise"
+              icon={BiBriefcaseAlt2}
+              onClick={() => {}}
+            />
+          </div>
         </div>
       )
     
