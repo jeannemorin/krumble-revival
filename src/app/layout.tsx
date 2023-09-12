@@ -8,21 +8,17 @@ import ToasterProvider from "./providers/ToasterProvider"
 
 import './globals.css'
 
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import LoginModal from "./components/modals/LoginModal"
 import getCurrentUser from "./actions/getCurrentUser"
 import RentModal from "./components/modals/RentModal"
 import ContactModal from "./components/modals/ContactModal"
 
-
-const font = Nunito({ subsets: ['latin'] })
-
-export const metadata: Metadata = {
+export const metadata = {
   title: 'KampusView',
-  description: 'Clone for Krumble platform',
+  description: 'Crash platform for Krumble',
 }
 
+const font = Nunito({ subsets: ['latin'] })
 
 
 export default async function RootLayout({
