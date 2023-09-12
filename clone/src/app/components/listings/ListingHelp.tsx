@@ -1,3 +1,5 @@
+'use client'
+
 import { SafeUser } from "@/app/types";
 
 import Heading from "../Heading";
