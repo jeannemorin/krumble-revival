@@ -112,8 +112,8 @@ const UserMenu: React.FC<UserMenuProps> = ({
                 />
 
                 <MenuItem 
-                  label="Ma page asso" 
-                  onClick={() => router.push('/properties')}
+                  label="Mes asso" 
+                  onClick={() => router.push('/mypages')}
                 />
                 <MenuItem 
                   label="Inscris ton asso" 

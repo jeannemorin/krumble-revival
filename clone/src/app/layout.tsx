@@ -12,6 +12,7 @@ import { Inter } from 'next/font/google'
 import LoginModal from "./components/modals/LoginModal"
 import getCurrentUser from "./actions/getCurrentUser"
 import RentModal from "./components/modals/RentModal"
+import ContactModal from "./components/modals/ContactModal"
 
 
 const font = Nunito({ subsets: ['latin'] })
@@ -37,6 +38,7 @@ export default async function RootLayout({
           <RegisterModal />
           <LoginModal />
           <RentModal />
+          <ContactModal />
           <Navbar currentUser={currentUser}/>
         </ClientOnly>
         <div className="pb-20 pt-28">

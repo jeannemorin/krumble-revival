@@ -3,45 +3,20 @@ import prisma from "@/app/libs/prismadb";
 export interface IListingsParams {
   userId?: string;
   title?: string;
-  description?: string;
-  subtitle?: string;
-  imageSrc?: string;
   school?: string;
   campusLocation?: string;
-  emailContact?: string;
-  phoneContact?: string;
-  partnershipDescription?: string;
   category?: string;
 }
 
-export default async function getListings() {
-    try{
-
-        const listings = await prisma.listing.findMany({
-            orderBy: {
-              createdAt: 'desc'
-            }
-          });
-
-          return listings;
-
-    } catch (error: any) {
-        throw new Error(error)
-    }
-}
-
-/*export default async function getListings(
+export default async function getListings(
   params: IListingsParams
 ) {
   try {
     const {
       userId,
-      roomCount, 
-      guestCount, 
-      bathroomCount, 
-      locationValue,
-      startDate,
-      endDate,
+      title, 
+      school, 
+      campusLocation, 
       category,
     } = params;
 
@@ -51,7 +26,7 @@ export default async function getListings() {
       query.userId = userId;
     }
 
-    if (category) {
+    /*if (category) {
       query.category = category;
     }
 
@@ -94,7 +69,7 @@ export default async function getListings() {
           }
         }
       }
-    }
+    }*/
 
     const listings = await prisma.listing.findMany({
       where: query,
@@ -112,4 +87,4 @@ export default async function getListings() {
   } catch (error: any) {
     throw new Error(error);
   }
-}*/
+}

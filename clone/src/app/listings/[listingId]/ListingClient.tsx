@@ -12,6 +12,11 @@ import Container from "@/app/components/Container";
 import { categories } from "@/app/components/navbar/Categories";
 import ListingHead from "@/app/components/listings/ListingHead";
 import ListingHelp from "@/app/components/listings/ListingHelp";
+import CategoryView from "@/app/components/listings/LIstingCategory";
+import { IconBaseProps } from "react-icons";
+import useContactModal from "@/app/hooks/useContactModal";
+
+
 
 const initialDateRange = {
   startDate: new Date(),
@@ -34,21 +39,8 @@ const ListingClient: React.FC<ListingClientProps> = ({
 }) => {
   const loginModal = useLoginModal();
   const router = useRouter();
-
-  /*const disabledDates = useMemo(() => {
-    let dates: Date[] = [];
-
-    reservations.forEach((reservation: any) => {
-      const range = eachDayOfInterval({
-        start: new Date(reservation.startDate),
-        end: new Date(reservation.endDate)
-      });
-
-      dates = [...dates, ...range];
-    });
-
-    return dates;
-  }, [reservations]);*/
+  const contactModal = useContactModal();
+  
 
   const category = useMemo(() => {
      return categories.find((items) => 
@@ -122,7 +114,28 @@ const ListingClient: React.FC<ListingClientProps> = ({
             description={listing.description}
             id={listing.id}
             currentUser={currentUser}
+            contact={contactModal.onOpen}
           />
+          { category && 
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-row items-center gap-4">
+                <category.icon size={40} className="text-neutral-600" />
+                <div className="flex flex-col">
+                    <div 
+                      className="text-lg font-semibold"
+                    >
+                      {category.label}
+                    </div>
+                    <div 
+                      className="text-neutral-500 font-light"
+                    >
+                      {category.description}
+                    </div>
+                </div>
+              </div>
+              <hr />
+            </div>
+          }
           <ListingHelp 
                 help={listing.partnershipDescription}
                 id={listing.id}

@@ -7,8 +7,10 @@ import { SafeUser } from "@/app/types";
 import Heading from "../Heading";
 import HeartButton from "../HeartButton";
 import Button from "../Button";
-import { MouseEvent } from "react";
+import { MouseEvent, useCallback, useState } from "react";
 import { BsMailbox } from 'react-icons/bs';
+
+import useContactModal from "@/app/hooks/useContactModal";
 
 interface ListingHeadProps {
   title: string;
@@ -17,7 +19,8 @@ interface ListingHeadProps {
   description: string;
   imageSrc: string;
   id: string;
-  currentUser?: SafeUser | null
+  currentUser?: SafeUser | null;
+  contact: () => void;
 }
 
 const ListingHead: React.FC<ListingHeadProps> = ({
@@ -27,24 +30,26 @@ const ListingHead: React.FC<ListingHeadProps> = ({
   description,
   imageSrc,
   id,
-  currentUser
+  currentUser,
+  contact
 }) => {
 
-
+  
   return ( 
-    <div className="flex flex-row w-full gap-5">
+    <div>
       
       <div className="
           overflow-hidden 
           rounded-xl
           relative
-          h-[500px]
-          w-[500px]
+          h-[40vh]
+          w-full
         ">
+          
             <Image
             src={imageSrc}
             fill
-            className="object-cover "
+            className="object-cover w-full"
             alt="Image"
             />
             <div className="absolute top-5 right-5">
@@ -52,22 +57,22 @@ const ListingHead: React.FC<ListingHeadProps> = ({
                     listingId={id}
                     currentUser={currentUser}/>
             </div>
-        </div>
+      </div>
 
         <div className="py-6">
             <Heading
                 title={title}
                 subtitle={`${school}, ${city}`}
             />
-            <hr className="mt-5"/>
-            <div className="w-[500px] mt-10 mb-10">
+            <div className=" mt-10 mb-6">
                 {description}
             </div>
-            <Button 
-                label={"Contacter"}
-                icon={BsMailbox} 
-                onClick={() => {}}
-            />
+            <div className="w-[150px]">
+              <Button 
+                  label={"Contacter"}
+                  onClick={contact}
+              />
+            </div>
         </div>
       
     </div>
