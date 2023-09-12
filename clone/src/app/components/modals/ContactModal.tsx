@@ -24,12 +24,7 @@ interface ContactModalProps {
 }
   
 
-const ContactModal: React.FC<ContactModalProps> = ({
-  email,
-  website,
-  phone,
-  socials
-}) => {
+const ContactModal = () => {
   
     const router = useRouter();
     const contactModal = useContactModal();
@@ -38,11 +33,11 @@ const ContactModal: React.FC<ContactModalProps> = ({
 
       const bodyContent = (
         <div className="flex flex-col gap-4">
-          email: {email}
+          email: 
           <hr />
-          website: {website}
+          website: 
           <hr />
-          phone: {phone}
+          phone: 
           <hr />
           réseaux sociaux: 
         </div>
